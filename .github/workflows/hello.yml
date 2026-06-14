@@ -1,15 +1,22 @@
-name: TXB Test
+name: TXB Collector
 
 on:
   workflow_dispatch:
 
 jobs:
-  hello:
+  collect:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Say Hello
-        run: |
-          echo "Hello Yuri!"
-          echo "TXB Actions is alive!"
-          date
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Requests
+        run: pip install requests
+
+      - name: Run Collector
+        run: python collect.py
